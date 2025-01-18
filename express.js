@@ -3,6 +3,8 @@ import cors from "cors"
 import signInRouter from "./routes/authentication/signIn/signIn.js";
 import signUpRouter from "./routes/authentication/signUp/signup.js";
 import mongooseConnect from "./db/cloudMongoDB/mongooseConnect.js";
+import tournamentsRouter from "./routes/tournaments/tournaments.js";
+import usersRouter from "./routes/users/users.js";
 
 await mongooseConnect();
 
@@ -18,7 +20,9 @@ server.get("/", (req,res)=>{
 
 server.use("/signin", signInRouter);
 server.use("/signup", signUpRouter);
+server.use("/tournaments", tournamentsRouter);
+server.use("/users", usersRouter);
 
 server.listen(port,()=>{
-    console.log(` ${Date().toString()} Server running on port: ${port}`)
+    console.log(` ${Date().toString()} Server running on port: ${port}`);
 });

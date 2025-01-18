@@ -3,38 +3,82 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     fullName : {
         type: "string",
-        require: true
+        required: true
     },
     emailId : {
         type: "string",
-        require: true
+        required: true
     },
     password : {
         type: "string",
-        require: true
+        required: true
     },
     isOrganizer : {
         type: "boolean",
-        require: true
+        required: true
     },
     mobileNumber : {
         type: "string",
-        require: false
+        required: false
     },
     governmentId : {
         type: "string",
-        require: false
+        required: false
     },
     bankAccountNumber : {
         type: "string",
-        require: false
+        required: false
     },
     bankCode : {
         type: "string",
-        require: false
+        required: false
+    },
+});
+
+const tournamentSchema = new mongoose.Schema({
+    gameName : {
+        type: "string",
+        required: true
+    },
+    gameType : {
+        type: "string",
+        required: true
+    },
+    gameMode : {
+        type: "string",
+        required: true
+    },
+    organizer : {
+        type: "string",
+        required: true
+    },
+    location : {
+        type: "string",
+        required: true
+    },
+    time : {
+        type: "string",
+        required: true
+    },
+    date : {
+        type: "string",
+        required: true
+    },
+    prizeAmount : {
+        type: "string",
+        required: true
+    },
+    registrationFee : {
+        type: "string",
+        required: true
+    },
+    emailId : {
+        type: "string",
+        required: true
     },
 });
 
 const userModel = new mongoose.model("user", userSchema, "users");
+const tournamentModel = new mongoose.model("tournament", tournamentSchema, "tournaments");
 
-export {userModel};
+export {userModel, tournamentModel};

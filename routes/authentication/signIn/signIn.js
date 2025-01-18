@@ -1,5 +1,10 @@
 import express from "express";
 import { userModel } from "../../../db/cloudMongoDB/model.js";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+
+dotenv.config();
 
 const signInRouter = express.Router();
 
@@ -15,11 +20,24 @@ signInRouter.post("/", async (req,res)=>{
     if(userObject){
 
         // Check password
-        if(body.password===userObject.password){
-            res.send({msg:"Signed in.", code:0});
-        }else{
-            res.send({msg:"Check password.", code:0});
-        }
+        bcrypt.compare(body.password, userObject.password, async (error, result)=>{
+            if(error){
+                res.send({msg:"Something wrong.", code:0});
+            }else{
+                if(result){
+                    let payload = {
+                        emailId: userObject.emailId,
+                        fullName: userObject.fullName,
+                        isOrganizer: userObject.isOrganizer,
+                        isSignedIn: true
+                    }
+                    let token = jwt.sign({...payload}, process.env.JWT_Key, {expiresIn: "1h"});
+                    res.send({msg:"Signed in.", token, code:1});
+                }else{
+                    res.send({msg:"Wrong password.", code:0});
+                }
+            }
+        });
         
     }else{
         res.send({msg:"Email Id not found. Sign Up", code:0});
