@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
         type: "string",
         required: true
     },
+    organizerName:  {
+        type: "string",
+        required: true
+    },
     isOrganizer : {
         type: "boolean",
         required: true
@@ -33,6 +37,10 @@ const userSchema = new mongoose.Schema({
         type: "string",
         required: false
     },
+    myRegistrations:{
+        type: [],
+        required: false
+    }
 });
 
 const tournamentSchema = new mongoose.Schema({
@@ -64,6 +72,10 @@ const tournamentSchema = new mongoose.Schema({
         type: "string",
         required: true
     },
+    description : {
+        type: "string",
+        required: false
+    },
     prizeAmount : {
         type: "string",
         required: true
@@ -76,6 +88,10 @@ const tournamentSchema = new mongoose.Schema({
         type: "string",
         required: true
     },
+    participants:{
+        type: [],
+        required: false
+    }
 });
 
 const userModel = new mongoose.model("user", userSchema, "users");

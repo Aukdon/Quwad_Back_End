@@ -27,11 +27,12 @@ signInRouter.post("/", async (req,res)=>{
                 if(result){
                     let payload = {
                         emailId: userObject.emailId,
+                        organizerName:userObject.organizerName,
                         fullName: userObject.fullName,
                         isOrganizer: userObject.isOrganizer,
                         isSignedIn: true
                     }
-                    let token = jwt.sign({...payload}, process.env.JWT_Key, {expiresIn: "1h"});
+                    let token = jwt.sign({...payload}, process.env.JWT_Key, {expiresIn: '1h'});
                     res.send({msg:"Signed in.", token, code:1});
                 }else{
                     res.send({msg:"Wrong password.", code:0});
