@@ -1,5 +1,5 @@
 import express from "express";
-import { tournamentModel } from "../../db/cloudMongoDB/model.js";
+import { tournamentModel, userModel } from "../../db/cloudMongoDB/model.js";
 
 const tournamentsRouter = express.Router();
 
@@ -20,8 +20,16 @@ tournamentsRouter.post("/organizedtournaments", async (req,res)=>{
     // User organized tournaments.
     let body = req.body;    
     try {
-        let allTournaments = await tournamentModel.find({emailId: body.emailId}).limit(25);
-        res.send({msg:"Fetched organized data.", allTournaments, code: 1});
+        // Check if user is Organizer.
+        let userObject = await userModel.findOne({emailId:body.emailId});
+        
+        if(userObject.isOrganizer){
+            let allTournaments = await tournamentModel.find({emailId: body.emailId}).limit(25);
+            res.send({msg:"Fetched organized data.", allTournaments, code: 1});
+        }else{
+            res.send({msg:"User is not a organizer. Go to profile and add all details to organize tournaments.", allTournaments:[], code: 0});
+        }
+        
     } catch (error) {
         res.send({msg:"Failed to fetch. Someething is broke. Try later.", error, code: 0});
     }
