@@ -76,11 +76,15 @@ const tournamentSchema = new mongoose.Schema({
         type: "string",
         required: false
     },
-    prizeAmount : {
+    registrationFee : {
         type: "string",
         required: true
     },
-    registrationFee : {
+    totalSlots : {
+        type: "number",
+        required: true
+    },
+    prizeAmount : {
         type: "string",
         required: true
     },
